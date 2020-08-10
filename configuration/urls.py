@@ -14,4 +14,8 @@ urlpatterns = [
         description="API for all things …",
         version="1.0.0"
     ), name='openapi-schema'),
+    path('redoc/', TemplateView.as_view(
+        template_name='redoc.html',
+        extra_context={'schema_url':'openapi-schema'}
+    ), name='redoc'),
 ]
