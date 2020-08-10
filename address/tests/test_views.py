@@ -73,6 +73,25 @@ class CreateAddressTest(TestCase):
             "longitude": "2222"
         }
 
+        self.valid_payload_lat_long = {
+            "street_name": "Rua: Paulo Eiró",
+            "number": 55,
+            "complement": "teste",
+            "neighbourhood": {
+                "name": "recanto camanducaia"
+            },
+            "city": {
+                "name": "sao paulo"
+            },
+            "state": {
+                "name": "sao paulo"
+            },
+            "country": {
+                "name": "brasil"
+            },
+            "zipcode": "13060226",
+        }
+
         self.invalid_payload = {
             "street_name": "Rua: Paulo Eiró",
             "number": 55,
@@ -96,6 +115,13 @@ class CreateAddressTest(TestCase):
         response = client.post(reverse('get_all_address'), data=json.dumps(self.invalid_payload),
                                content_type="application/json")
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+    def test_create_valid_address_lat_long(self):
+        response = client.post(reverse('get_all_address'), data=json.dumps(self.valid_payload_lat_long),
+                               content_type="application/json")
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertIsNotNone(response.data.get('latitude'))
+        self.assertIsNotNone(response.data.get('longitude'))
 
 
 class UpdateAddressTest(TestCase):

@@ -2,6 +2,7 @@ from django.db import models
 from django.db.models.signals import pre_save
 from django.dispatch import receiver
 import requests
+from configuration.environments import GEO_KEY
 
 class CountryModel(models.Model):
     name = models.CharField(max_length=255)
@@ -84,7 +85,7 @@ def save_lat_long(sender, instance, *args, **kwargs):
 
 def get_geocode(address):
     url = 'https://maps.googleapis.com/maps/api/geocode/json'
-    params = {'sensor': 'false', 'address': address, "key": "AIzaSyDTK0igIQTCi5EYKL9tzOIJ9N6FUASGZos"}
+    params = {'sensor': 'false', 'address': address, "key": GEO_KEY}
     response = requests.get(url, params=params)
     if response.status_code == 200:
         results = response.json()['results']
