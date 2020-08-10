@@ -14,7 +14,7 @@ Run a containser
 docker run -p 8000:8000 flag_name_or_image_id
 
 <h2>
-Example of addres to post
+Example of address to post
 </h2>
 
 {
